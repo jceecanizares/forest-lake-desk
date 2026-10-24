@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>Forest Lake San Jacinto - Authorized Agency Desk</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Montserrat', 'sans-serif'],
+            display: ['Oswald', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .bg-masterplan {
+      background-color: #0C0A09;
+      background-image: radial-gradient(#292524 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    .sector-block {
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+      outline: none;
+    }
+    .sector-block:hover rect, .sector-block:focus-visible rect {
+      filter: brightness(1.3);
+      stroke-width: 4;
+    }
+    .sector-block.active-sector rect {
+      filter: brightness(1.6);
+      stroke-width: 5;
+      stroke: #FFFFFF;
+    }
+    
+    .glass-card {
+      background: rgba(12, 10, 9, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .chip-scroll::-webkit-scrollbar { height: 4px; }
+    .chip-scroll::-webkit-scrollbar-thumb { background: #44403C; border-radius: 2px; }
+    .chip-scroll::-webkit-scrollbar-thumb:hover { background: #D97706; }
+
+    /* Anti-Poaching Print Stylesheet */
+    @media print {
+      body { background-color: #ffffff !important; color: #000000 !important; }
+      body::before {
+        content: "OFFICIAL QUOTATION & INVENTORY DESK EXCLUSIVELY MANAGED BY UM JOHN EDCEE T. CAÑIZARES (0919 368 2062) - CASSIA AGENCY / ANIMO";
+        display: block; text-align: center; font-weight: 800; font-size: 11pt;
+        margin-bottom: 24px; padding-bottom: 12px; border-bottom: 2px solid #000; color: #000; font-family: 'Montserrat', sans-serif;
+      }
+      .no-print, nav, footer, .glass-card, .mobile-dock { display: none !important; }
+      #pricing-panel { width: 100% !important; background: transparent !important; color: #000 !important; }
+      .text-stone-400, .text-stone-300, .text-amber-400, .text-emerald-400, .text-red-400 { color: #000 !important; }
+      .bg-stone-900, .bg-[#151210], .bg-stone-950 { background: transparent !important; border: 1px solid #ccc !important; }
+      svg { filter: none !important; }
+    }
+
+    /* Watermark Overlay for Images */
+    .watermark-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='350' height='350'><text x='10' y='175' transform='rotate(-30 175 175)' fill='rgba(255,255,255,0.4)' font-size='15' font-family='sans-serif' font-weight='900'>UM JOHN EDCEE T. CAÑIZARES • 0919 368 2062</text></svg>");
+      z-index: 10;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#0C0A09] text-stone-100 font-sans flex flex-col overflow-x-hidden antialiased pb-20 lg:pb-0">
+
+  <!-- ================= TOP HEADER ================= -->
+  <header class="shrink-0 h-14 bg-black flex items-center justify-between border-b border-amber-600/40 px-4 md:px-8 z-40 relative no-print">
+    <div class="flex items-center gap-3">
+      <div class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></div>
+      <span class="text-amber-500 font-bold tracking-wider text-xs md:text-sm uppercase">
+        Forest Lake San Jacinto
+      </span>
+    </div>
+    <div class="text-[10px] md:text-xs text-stone-400 font-medium border-l border-stone-800 pl-3 md:pl-4">
+      Authorized Desk: <span class="text-white font-bold tracking-wide cursor-pointer select-none" ondblclick="promptAdminUnlock()">UM JOHN EDCEE T. CAÑIZARES</span>
+    </div>
+  </header>
+
+  <!-- ================= QUICK SELECTOR ================= -->
+  <nav class="shrink-0 bg-[#141210] border-b border-stone-800 px-3 py-2 z-30 sticky top-0 shadow-md no-print">
+    <div class="flex items-center gap-2 overflow-x-auto chip-scroll pb-1">
+      <span class="text-[10px] uppercase font-bold text-stone-500 tracking-wider whitespace-nowrap pl-1 pr-1">
+        Sectors
+      </span>
+      <button onclick="selectSector('begonia-c')" class="chip-btn px-3 py-1.5 rounded bg-emerald-950/70 border border-emerald-600/60 text-emerald-300 text-xs font-semibold whitespace-nowrap active:scale-95 transition-all">
+        Begonia C
+      </button>
+      <button onclick="selectSector('begonia-a')" class="chip-btn px-3 py-1.5 rounded bg-stone-900 border border-stone-700 text-stone-300 text-xs font-semibold whitespace-nowrap active:scale-95 transition-all">
+        Begonia A
+      </button>
+      <button onclick="selectSector('begonia-d')" class="chip-btn px-3 py-1.5 rounded bg-stone-900 border border-stone-700 text-stone-300 text-xs font-semibold whitespace-nowrap active:scale-95 transition-all">
+        Begonia D
+      </button>
+      <button onclick="selectSector('begonia-b')" class="chip-btn px-3 py-1.5 rounded bg-stone-900 border border-stone-700 text-stone-300 text-xs font-semibold whitespace-nowrap active:scale-95 transition-all">
+        Begonia B
+      </button>
+      <button onclick="selectSector('cattleya-b')" class="chip-btn px-3 py-1.5 rounded bg-stone-900 border border-stone-700 text-stone-300 text-xs font-semibold whitespace-nowrap active:scale-95 transition-all">
+        Cattleya B
+      </button>
+      <button onclick="selectSector('dahlia-c')" class="chip-btn px-3 py-1.5 rounded bg-stone-900 border border-stone-700 text-stone-300 text-xs font-semibold whitespace-nowrap active:scale-95 transition-all">
+        Dahlia C
+      </button>
+      <button onclick="selectSector('azalea-a')" class="chip-btn px-3 py-1.5 rounded bg-red-950/40 border border-red-800/40 text-red-400 text-xs font-semibold whitespace-nowrap active:scale-95 transition-all">
+        Azalea A (Hold)
+      </button>
+      <button onclick="selectSector('azalea-b')" class="chip-btn px-3 py-1.5 rounded bg-stone-900 border border-stone-700 text-stone-400 text-xs font-semibold whitespace-nowrap active:scale-95 transition-all">
+        Azalea B (Sold)
+      </button>
+    </div>
+  </nav>
+
+  <!-- ================= MAIN VIEWPORT ================= -->
+  <main class="flex-1 flex flex-col lg:flex-row w-full">
+    
+    <!-- LEFT: VISUALS (SCHEMATIC, VIDEO, BLUEPRINT) -->
+    <section class="w-full lg:flex-1 relative flex flex-col border-b lg:border-b-0 lg:border-r border-stone-800 lg:overflow-y-auto no-print bg-masterplan">
+      
+      <!-- Interactive SVG Canvas -->
+      <div class="relative w-full min-h-[380px] lg:min-h-[500px] flex items-center justify-center p-4 pl-0 lg:pl-16">
+        
+        <!-- Branding Badge -->
+        <div class="absolute top-4 left-4 lg:top-6 lg:left-6 glass-card border border-amber-600/50 rounded-xl p-4 shadow-2xl z-20 max-w-[250px]">
+          <div class="text-[9px] text-amber-500 font-bold tracking-widest uppercase mb-1">
+            Authorized Sales Desk
+          </div>
+          <div class="text-white font-bold text-sm leading-tight mb-1">
+            UM John Edcee T. Cañizares
+          </div>
+          <div class="flex items-center gap-2 mb-3">
+            <svg class="w-3 h-3 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
+            <span class="text-stone-300 font-mono text-xs font-semibold">0919 368 2062</span>
+          </div>
+          
+          <div class="flex flex-col gap-2 border-t border-stone-800 pt-3">
+            <a href="https://www.facebook.com/share/1CBHa76f2J/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#0866FF] hover:text-[#3884FF] transition-colors">
+              <span>&rarr; Add Me on Facebook</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Schematic SVG Grid -->
+        <svg viewBox="0 0 1080 440" class="w-full h-auto max-h-[60vh] lg:max-h-[70vh] drop-shadow-2xl object-contain select-none">
+          <defs>
+            <filter id="glowGreen" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#22C55E" flood-opacity="0.5"/></filter>
+            <filter id="glowRed" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#DC2626" flood-opacity="0.4"/></filter>
+            <filter id="glowCyan" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#0891B2" flood-opacity="0.4"/></filter>
+          </defs>
+
+          <!-- CONNECTING PATHWAYS -->
+          <path d="M 140 230 L 940 230" stroke="#292524" stroke-width="24" stroke-linecap="round" />
+          <path d="M 540 100 L 540 340" stroke="#292524" stroke-width="24" stroke-linecap="round" />
+
+          <!-- ROW 1 (TOP) -->
+          <g id="poly-phase-2" class="sector-block" role="button" tabindex="0" onclick="selectSector('phase-2')">
+            <rect x="450" y="50" width="380" height="100" rx="12" fill="rgba(87, 83, 78, 0.2)" stroke="#78716C" stroke-width="2" stroke-dasharray="8,4" />
+            <text x="640" y="100" fill="#A8A29E" font-size="28" font-weight="900" font-family="Montserrat" text-anchor="middle">BEGONIA E, F, G, H</text>
+            <text x="640" y="125" fill="#78716C" font-size="16" font-weight="700" font-family="Montserrat" text-anchor="middle">PHASE 2 (UNRELEASED)</text>
+          </g>
+          
+          <g id="poly-cattleya-b" class="sector-block" role="button" tabindex="0" onclick="selectSector('cattleya-b')" filter="url(#glowCyan)">
+            <rect x="850" y="50" width="180" height="100" rx="12" fill="rgba(8, 145, 178, 0.25)" stroke="#06B6D4" stroke-width="3" />
+            <text x="940" y="110" fill="#FFFFFF" font-size="22" font-weight="900" font-family="Montserrat" text-anchor="middle">CATTLEYA B</text>
+          </g>
+
+          <!-- ROW 2 (MIDDLE) -->
+          <g id="poly-begonia-d" class="sector-block" role="button" tabindex="0" onclick="selectSector('begonia-d')" filter="url(#glowGreen)">
+            <rect x="450" y="170" width="180" height="100" rx="12" fill="rgba(21, 128, 61, 0.35)" stroke="#22C55E" stroke-width="3" />
+            <text x="540" y="230" fill="#FFFFFF" font-size="24" font-weight="900" font-family="Montserrat" text-anchor="middle">BEG D</text>
+          </g>
+
+          <g id="poly-begonia-c" class="sector-block" role="button" tabindex="0" onclick="selectSector('begonia-c')" filter="url(#glowGreen)">
+            <rect x="650" y="170" width="180" height="100" rx="12" fill="rgba(34, 197, 94, 0.45)" stroke="#4ADE80" stroke-width="4" />
+            <text x="740" y="225" fill="#FFFFFF" font-size="26" font-weight="900" font-family="Montserrat" text-anchor="middle">BEG C</text>
+            <text x="740" y="250" fill="#FEF08A" font-size="14" font-weight="800" font-family="Montserrat" text-anchor="middle">PHP 9**/MO</text>
+          </g>
+
+          <g id="poly-dahlia-c" class="sector-block" role="button" tabindex="0" onclick="selectSector('dahlia-c')" filter="url(#glowCyan)">
+            <rect x="850" y="170" width="180" height="100" rx="12" fill="rgba(8, 145, 178, 0.25)" stroke="#06B6D4" stroke-width="3" />
+            <text x="940" y="230" fill="#FFFFFF" font-size="24" font-weight="900" font-family="Montserrat" text-anchor="middle">DAHLIA C</text>
+          </g>
+
+          <!-- ROW 3 (BOTTOM) -->
+          <g id="poly-azalea-a" class="sector-block" role="button" tabindex="0" onclick="selectSector('azalea-a')" filter="url(#glowRed)">
+            <rect x="50" y="290" width="180" height="100" rx="12" fill="rgba(153, 27, 27, 0.5)" stroke="#EF4444" stroke-width="3" stroke-dasharray="6,4" />
+            <text x="140" y="340" fill="#FFFFFF" font-size="22" font-weight="900" font-family="Montserrat" text-anchor="middle">AZALEA A</text>
+            <text x="140" y="365" fill="#FCA5A5" font-size="12" font-weight="800" font-family="Montserrat" text-anchor="middle">INVESTOR HOLD</text>
+          </g>
+
+          <g id="poly-azalea-b" class="sector-block" role="button" tabindex="0" onclick="selectSector('azalea-b')">
+            <rect x="250" y="290" width="180" height="100" rx="12" fill="rgba(87, 83, 78, 0.4)" stroke="#57534E" stroke-width="2" />
+            <text x="340" y="340" fill="#D6D3D1" font-size="22" font-weight="900" font-family="Montserrat" text-anchor="middle">AZALEA B</text>
+            <text x="340" y="365" fill="#A8A29E" font-size="12" font-weight="800" font-family="Montserrat" text-anchor="middle">SOLD OUT</text>
+          </g>
+
+          <g id="poly-begonia-a" class="sector-block" role="button" tabindex="0" onclick="selectSector('begonia-a')" filter="url(#glowGreen)">
+            <rect x="450" y="290" width="180" height="100" rx="12" fill="rgba(21, 128, 61, 0.35)" stroke="#22C55E" stroke-width="3" />
+            <text x="540" y="350" fill="#FFFFFF" font-size="24" font-weight="900" font-family="Montserrat" text-anchor="middle">BEG A</text>
+          </g>
+
+          <g id="poly-begonia-b" class="sector-block" role="button" tabindex="0" onclick="selectSector('begonia-b')" filter="url(#glowGreen)">
+            <rect x="650" y="290" width="180" height="100" rx="12" fill="rgba(21, 128, 61, 0.25)" stroke="#4ADE80" stroke-width="3" />
+            <text x="740" y="350" fill="#FFFFFF" font-size="24" font-weight="900" font-family="Montserrat" text-anchor="middle">BEG B</text>
+          </g>
+        </svg>
+
+      </div>
+
+      <!-- Action Toggles (Blueprint View) -->
+      <div class="px-4 pb-4 lg:px-8 w-full flex justify-center border-b border-stone-800 bg-[#0C0A09]">
+        <button onclick="document.getElementById('blueprintModal').classList.remove('hidden')" class="py-2.5 px-6 bg-stone-900 border border-amber-600/50 hover:bg-stone-800 text-amber-500 font-bold rounded-lg text-xs tracking-wider uppercase transition-colors shadow-lg flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+          View Official Blueprint Map
+        </button>
+      </div>
+
+      <!-- MP4 Native Video Section -->
+      <div class="p-4 lg:p-8 bg-[#080706] flex-1">
+        <div class="max-w-3xl mx-auto">
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-1">Future Development & Park Walkthrough</h3>
+          <p class="text-xs text-stone-400 mb-4">Curated by UM John Edcee T. Cañizares Desk</p>
+          <div class="w-full rounded-xl overflow-hidden border border-stone-800 shadow-2xl bg-black">
+            <!-- MP4 File targets 'future-plan.mp4' in root directory -->
+            <video controls playsinline preload="metadata" class="w-full h-auto aspect-video outline-none" poster="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'><rect width='100%' height='100%' fill='%23111'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%23444' font-family='sans-serif' font-size='14'>Video Loading / Check MP4 File</text></svg>">
+              <source src="future-plan.mp4" type="video/mp4">
+              Your browser does not support HTML5 video.
+            </video>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: WORKSPACE (PRICING & LEAD GEN) -->
+    <aside id="pricing-panel" class="w-full lg:w-[480px] xl:w-[540px] bg-[#110E0C] flex flex-col shrink-0 lg:max-h-[calc(100vh-3.5rem)] lg:overflow-y-auto print-panel shadow-[-10px_0_30px_rgba(0,0,0,0.5)] z-10">
+      
+      <!-- Panel Header & Disclaimer -->
+      <div class="p-4 md:p-6 border-b border-stone-800 bg-black/80 backdrop-blur-md sticky top-0 z-20">
+        <div class="flex justify-between items-start mb-3">
+          <div>
+            <h2 id="sectorTitle" class="text-xl md:text-2xl font-display font-bold text-white tracking-wide uppercase">
+              Begonia C
+            </h2>
+            <div id="sectorBadge" class="text-emerald-400 text-xs font-semibold uppercase tracking-wider mt-0.5">
+              Prime Budget Corridor
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="text-[10px] text-stone-400 font-bold uppercase block">Lots</span>
+            <div class="inline-flex items-center bg-stone-900 border border-stone-700 rounded overflow-hidden mt-0.5 shadow-inner no-print">
+              <button onclick="adjustLotCount(-1)" class="px-3 py-1.5 text-stone-300 hover:bg-stone-800 text-sm font-bold active:bg-amber-600 transition-colors">-</button>
+              <span id="lotCountDisplay" class="px-4 py-1.5 text-sm font-bold text-amber-400 bg-stone-950 border-x border-stone-700 min-w-[40px] text-center">1</span>
+              <button onclick="adjustLotCount(1)" class="px-3 py-1.5 text-stone-300 hover:bg-stone-800 text-sm font-bold active:bg-amber-600 transition-colors">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metered Usage Indicator -->
+        <div id="meteredIndicator" class="flex items-center justify-between mt-3 text-[10px] uppercase font-bold tracking-wider no-print">
+          <span class="text-stone-400">Desk Access Status:</span>
+          <span id="meteredText" class="text-emerald-400 bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-800/50">2 Free Previews Remaining</span>
+        </div>
+
+        <!-- Masked Teaser Overlay / Lock Screen -->
+        <div id="teaserBanner" class="hidden mt-4 p-5 bg-stone-900/90 border border-[#0866FF]/40 rounded-xl shadow-xl no-print relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-[#0866FF]/5 to-transparent pointer-events-none"></div>
+          <div class="flex items-start gap-3 mb-4 relative z-10">
+            <div class="text-3xl">😉</div>
+            <div class="text-xs text-stone-300 leading-relaxed">
+              <strong class="text-white block mb-1 text-sm tracking-wide">Preview Limit Reached / Numbers Masked</strong>
+              To unlock the exact computations and verify real-time plot blueprints, add me on Facebook and send a quick message!
+            </div>
+          </div>
+          
+          <div class="flex flex-col gap-2 relative z-10">
+            <a href="https://www.facebook.com/share/1CBHa76f2J/" target="_blank" rel="noopener noreferrer" class="w-full py-3 bg-[#0866FF] hover:bg-[#3884FF] text-white font-bold rounded-lg text-center flex items-center justify-center gap-2 text-xs uppercase tracking-wider shadow-md transition-colors">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.145 2 11.258c0 2.91 1.455 5.517 3.736 7.208V22l3.418-1.875c.917.254 1.89.391 2.896.391 5.523 0 10-4.145 10-9.258C22 6.145 17.523 2 12 2zm1.066 12.441l-2.541-2.71-4.96 2.71 5.454-5.789 2.607 2.71 4.894-2.71-5.454 5.789z"/></svg>
+              1. Add Me on Facebook
+            </a>
+            
+            <a href="https://m.me/jhn.cnzrs" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-stone-800 hover:bg-stone-700 text-stone-300 font-bold rounded-lg text-center flex items-center justify-center gap-2 text-[11px] uppercase tracking-wider transition-colors border border-stone-700">
+              2. Message Directly to Unlock
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tier Cards Container -->
+      <div id="tierCardsContainer" class="p-4 md:p-6 space-y-4 flex-1">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Action Footer -->
+      <div class="p-4 md:p-6 bg-[#0A0807] border-t border-stone-800 space-y-3 sticky bottom-0 z-20 no-print">
+        
+        <div class="flex flex-col gap-2.5">
+          <a href="https://www.facebook.com/share/1CBHa76f2J/" target="_blank" rel="noopener noreferrer" class="w-full py-3.5 px-4 bg-[#0866FF] hover:bg-[#3884FF] active:scale-[0.98] text-white font-bold rounded-lg text-xs md:text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-3 shadow-[0_0_15px_rgba(8,102,255,0.3)]">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.145 2 11.258c0 2.91 1.455 5.517 3.736 7.208V22l3.418-1.875c.917.254 1.89.391 2.896.391 5.523 0 10-4.145 10-9.258C22 6.145 17.523 2 12 2zm1.066 12.441l-2.541-2.71-4.96 2.71 5.454-5.789 2.607 2.71 4.894-2.71-5.454 5.789z"/></svg>
+            <span>Connect & Add on Facebook</span>
+          </a>
+          
+          <button onclick="triggerMessengerAction()" class="w-full py-3 px-4 bg-stone-800 hover:bg-stone-700 active:bg-stone-900 text-stone-200 border border-stone-700 font-bold rounded-lg text-[11px] md:text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2">
+            <span id="messengerBtnLabel">Send Inquiry via Messenger</span>
+          </button>
+        </div>
+
+        <button id="copyBtn" onclick="copyProfessionalQuotation()" class="w-full py-2.5 px-4 bg-transparent hover:bg-stone-900 text-amber-500/80 border border-stone-800 font-bold rounded text-[10px] uppercase tracking-wider transition-colors flex items-center justify-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed mt-1">
+          <span id="copyBtnLabel">Copy Quotation Details</span>
+        </button>
+      </div>
+    </aside>
+  </main>
+
+  <!-- ================= MOBILE STICKY DOCK ================= -->
+  <div class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#080706] border-t border-[#0866FF]/30 p-2.5 px-4 backdrop-blur-xl flex items-center justify-between shadow-[0_-10px_30px_rgba(0,0,0,0.8)] mobile-dock">
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <div class="w-9 h-9 rounded-full bg-stone-900 border border-amber-600/60 flex items-center justify-center text-xs font-black text-amber-500 tracking-tighter">
+          JC
+        </div>
+        <div class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 border-[#080706] rounded-full"></div>
+      </div>
+      <div class="text-left">
+        <div class="text-[11px] font-bold text-white uppercase tracking-wider leading-tight">UM John Edcee</div>
+        <div class="text-[9px] text-[#3884FF] font-semibold uppercase">Active • Fast Response</div>
+      </div>
+    </div>
+    
+    <div class="flex items-center gap-1.5">
+      <a href="https://m.me/jhn.cnzrs" target="_blank" rel="noopener noreferrer" class="p-2.5 bg-stone-800 text-stone-300 rounded-lg active:scale-95 transition-transform border border-stone-700">
+        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.145 2 11.258c0 2.91 1.455 5.517 3.736 7.208V22l3.418-1.875c.917.254 1.89.391 2.896.391 5.523 0 10-4.145 10-9.258C22 6.145 17.523 2 12 2zm1.066 12.441l-2.541-2.71-4.96 2.71 5.454-5.789 2.607 2.71 4.894-2.71-5.454 5.789z"/></svg>
+      </a>
+      
+      <a href="https://www.facebook.com/share/1CBHa76f2J/" target="_blank" rel="noopener noreferrer" 
+         class="py-2.5 px-3.5 bg-[#0866FF] text-white font-bold rounded-lg text-[11px] tracking-wide flex items-center gap-1.5 shadow-lg active:scale-95 transition-transform">
+        <span>Add Profile</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ================= BLUEPRINT WATERMARK MODAL ================= -->
+  <div id="blueprintModal" class="hidden fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex flex-col">
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center p-4 border-b border-stone-800 bg-[#0A0807]">
+      <div class="text-xs font-bold text-amber-500 uppercase tracking-widest">Official Map Blueprint</div>
+      <button onclick="document.getElementById('blueprintModal').classList.add('hidden')" class="text-stone-400 hover:text-white p-2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+    </div>
+    <!-- Modal Body (Image + Watermark) -->
+    <div class="flex-1 relative overflow-auto flex items-center justify-center p-4">
+      <div class="relative max-w-full max-h-full inline-block border border-stone-700 shadow-2xl">
+        <div class="watermark-overlay"></div>
+        <!-- Reference your official uploaded map here -->
+        <img src="blueprint.jpg" alt="Official Blueprint" draggable="false" oncontextmenu="return false;" class="max-w-[1200px] w-full h-auto object-contain block pointer-events-auto">
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= COPY INTERCEPT MODAL ================= -->
+  <div id="copyLockModal" class="hidden fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#110E0C] border border-[#0866FF]/50 rounded-xl p-6 max-w-sm w-full shadow-2xl text-center">
+      <div class="text-4xl mb-3">🔒</div>
+      <h3 class="text-lg font-bold text-white uppercase tracking-wide mb-2">Quotation Locked</h3>
+      <p class="text-xs text-stone-300 leading-relaxed mb-5">
+        Automated export is currently locked to prevent unauthorized agent misuse. Please connect with UM John Edcee directly to receive the verified PDF quotation.
+      </p>
+      <div class="space-y-3">
+        <a href="https://www.facebook.com/share/1CBHa76f2J/" target="_blank" rel="noopener noreferrer" class="w-full py-3 bg-[#0866FF] text-white font-bold rounded text-xs uppercase tracking-wider block">Add Profile to Unlock</a>
+        <button onclick="document.getElementById('copyLockModal').classList.add('hidden')" class="w-full py-2 bg-stone-800 text-stone-400 font-bold rounded text-xs uppercase tracking-wider block">Close Window</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= DATA & LOGIC ENGINE ================= -->
+  <script>
+    const MASTER_PIN = "100424";
+    const MAX_FREE_VIEWS = 2;
+    
+    let isUnlocked = localStorage.getItem('fl_desk_unlocked') === 'true';
+    let isClientLocked = localStorage.getItem('fl_metered_lock') === 'true';
+    let visitedSectors = JSON.parse(localStorage.getItem('fl_visited_sectors') || '[]');
+
+    // Instant Admin URL Bypass check
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('pin') === MASTER_PIN) {
+      isUnlocked = true;
+      localStorage.setItem('fl_desk_unlocked', 'true');
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    if (isUnlocked) {
+      isClientLocked = false; // Admin overrides lock
+    }
+
+    // Complete Verified Pricing Data Structure
+    const SECTOR_DATA = {
+      'begonia-c': {
+        name: 'Begonia C', badge: 'Prime Budget Corridor', isHold: false,
+        tiers: [
+          { type: 'Lawn - Standard (STD)', status: 'AVAILABLE', origPrice: 65000, discount: 10000, ncp: 55000, lotPrice: 41250, mcf: 13750, spotCash: 46750, spotDp: 8800, splitDp: 917, bal2yr: 1834, bal3yr: 1420, bal5yr: 979 },
+          { type: 'Lawn - Premium (PRM)', status: 'AVAILABLE', origPrice: 70000, discount: 10000, ncp: 60000, lotPrice: 45000, mcf: 15000, spotCash: 51000, spotDp: 9600, splitDp: 1000, bal2yr: 2000, bal3yr: 1549, bal5yr: 1068 },
+          { type: 'Lawn - Special Premium (SPR)', status: 'AVAILABLE', origPrice: 80000, discount: 10000, ncp: 70000, lotPrice: 52500, mcf: 17500, spotCash: 59500, spotDp: 11200, splitDp: 1167, bal2yr: 2334, bal3yr: 1807, bal5yr: 1246 },
+          { type: 'Estate Lot (12 Lots)', status: 'AVAILABLE', origPrice: 960000, discount: 120000, ncp: 840000, lotPrice: 630000, mcf: 210000, spotCash: 714000, spotDp: 134400, splitDp: 14000, bal2yr: 28000, bal3yr: 21684, bal5yr: 14949 }
+        ]
+      },
+      'begonia-b': {
+        name: 'Begonia B', badge: 'Roadside Premium', isHold: false,
+        tiers: [
+          { type: 'Lawn - Standard (STD)', status: 'DEPLETED', origPrice: 65000, discount: 10000, ncp: 55000, lotPrice: 41250, mcf: 13750, spotCash: 46750, spotDp: 8800, splitDp: 917, bal2yr: 1834, bal3yr: 1420, bal5yr: 979 },
+          { type: 'Lawn - Premium (PRM)', status: 'AVAILABLE', origPrice: 70000, discount: 10000, ncp: 60000, lotPrice: 45000, mcf: 15000, spotCash: 51000, spotDp: 9600, splitDp: 1000, bal2yr: 2000, bal3yr: 1549, bal5yr: 1068 },
+          { type: 'Lawn - Special Premium (SPR)', status: 'AVAILABLE', origPrice: 80000, discount: 10000, ncp: 70000, lotPrice: 52500, mcf: 17500, spotCash: 59500, spotDp: 11200, splitDp: 1167, bal2yr: 2334, bal3yr: 1807, bal5yr: 1246 },
+          { type: 'Estate Lot (12 Lots)', status: 'AVAILABLE', origPrice: 960000, discount: 120000, ncp: 840000, lotPrice: 630000, mcf: 210000, spotCash: 714000, spotDp: 134400, splitDp: 14000, bal2yr: 28000, bal3yr: 21684, bal5yr: 14949 }
+        ]
+      },
+      'phase-2': {
+        name: 'Phase 2 (E, F, G, H)', badge: 'Unreleased Future Plan', isHold: false,
+        tiers: [
+          { type: 'Projected Lawn (STD)', status: 'UNRELEASED', origPrice: 65000, discount: 10000, ncp: 55000, lotPrice: 41250, mcf: 13750, spotCash: 46750, spotDp: 8800, splitDp: 917, bal2yr: 1834, bal3yr: 1420, bal5yr: 979 },
+          { type: 'Projected Lawn (PRM)', status: 'UNRELEASED', origPrice: 70000, discount: 10000, ncp: 60000, lotPrice: 45000, mcf: 15000, spotCash: 51000, spotDp: 9600, splitDp: 1000, bal2yr: 2000, bal3yr: 1549, bal5yr: 1068 }
+        ]
+      },
+      'begonia-a': {
+        name: 'Begonia A', badge: 'Entrance Corridor', isHold: false,
+        tiers: [
+          { type: 'Lawn - Standard (STD)', status: 'AVAILABLE', origPrice: 70000, discount: 10000, ncp: 60000, lotPrice: 45000, mcf: 15000, spotCash: 51000, spotDp: 9600, splitDp: 1000, bal2yr: 2000, bal3yr: 1549, bal5yr: 1068 },
+          { type: 'Lawn - Premium (PRM)', status: 'AVAILABLE', origPrice: 75000, discount: 10000, ncp: 65000, lotPrice: 48750, mcf: 16250, spotCash: 55250, spotDp: 10400, splitDp: 1084, bal2yr: 2167, bal3yr: 1678, bal5yr: 1157 },
+          { type: 'Lawn - Special Premium (SPR)', status: 'AVAILABLE', origPrice: 90000, discount: 10000, ncp: 80000, lotPrice: 60000, mcf: 20000, spotCash: 68000, spotDp: 12800, splitDp: 1334, bal2yr: 2667, bal3yr: 2066, bal5yr: 1424 },
+          { type: 'Estate Lot (12 Lots)', status: 'AVAILABLE', origPrice: 1080000, discount: 120000, ncp: 960000, lotPrice: 720000, mcf: 240000, spotCash: 816000, spotDp: 153600, splitDp: 16000, bal2yr: 32000, bal3yr: 24782, bal5yr: 17084 }
+        ]
+      },
+      'begonia-d': {
+        name: 'Begonia D', badge: 'Inner Contiguous Core', isHold: false,
+        tiers: [
+          { type: 'Lawn - Standard (STD)', status: 'AVAILABLE', origPrice: 70000, discount: 10000, ncp: 60000, lotPrice: 45000, mcf: 15000, spotCash: 51000, spotDp: 9600, splitDp: 1000, bal2yr: 2000, bal3yr: 1549, bal5yr: 1068 },
+          { type: 'Lawn - Premium (PRM)', status: 'AVAILABLE', origPrice: 75000, discount: 10000, ncp: 65000, lotPrice: 48750, mcf: 16250, spotCash: 55250, spotDp: 10400, splitDp: 1084, bal2yr: 2167, bal3yr: 1678, bal5yr: 1157 },
+          { type: 'Lawn - Special Premium (SPR)', status: 'AVAILABLE', origPrice: 90000, discount: 10000, ncp: 80000, lotPrice: 60000, mcf: 20000, spotCash: 68000, spotDp: 12800, splitDp: 1334, bal2yr: 2667, bal3yr: 2066, bal5yr: 1424 },
+          { type: 'Estate Lot (12 Lots)', status: 'AVAILABLE', origPrice: 1080000, discount: 120000, ncp: 960000, lotPrice: 720000, mcf: 240000, spotCash: 816000, spotDp: 153600, splitDp: 16000, bal2yr: 32000, bal3yr: 24782, bal5yr: 17084 }
+        ]
+      },
+      'cattleya-b': {
+        name: 'Cattleya B', badge: 'East Perimeter', isHold: false,
+        tiers: [
+          { type: 'Lawn - Standard (STD)', status: 'AVAILABLE', origPrice: 70000, discount: 10000, ncp: 60000, lotPrice: 45000, mcf: 15000, spotCash: 51000, spotDp: 9600, splitDp: 1000, bal2yr: 2000, bal3yr: 1549, bal5yr: 1068 },
+          { type: 'Lawn - Premium (PRM)', status: 'AVAILABLE', origPrice: 75000, discount: 10000, ncp: 65000, lotPrice: 48750, mcf: 16250, spotCash: 55250, spotDp: 10400, splitDp: 1084, bal2yr: 2167, bal3yr: 1678, bal5yr: 1157 },
+          { type: 'Lawn - Special Premium (SPR)', status: 'AVAILABLE', origPrice: 90000, discount: 10000, ncp: 80000, lotPrice: 60000, mcf: 20000, spotCash: 68000, spotDp: 12800, splitDp: 1334, bal2yr: 2667, bal3yr: 2066, bal5yr: 1424 },
+          { type: 'Estate Lot (12 Lots)', status: 'AVAILABLE', origPrice: 1080000, discount: 120000, ncp: 960000, lotPrice: 720000, mcf: 240000, spotCash: 816000, spotDp: 153600, splitDp: 16000, bal2yr: 32000, bal3yr: 24782, bal5yr: 17084 }
+        ]
+      },
+      'dahlia-c': {
+        name: 'Dahlia C', badge: 'West Perimeter', isHold: false,
+        tiers: [
+          { type: 'Lawn - Standard (STD)', status: 'AVAILABLE', origPrice: 70000, discount: 10000, ncp: 60000, lotPrice: 45000, mcf: 15000, spotCash: 51000, spotDp: 9600, splitDp: 1000, bal2yr: 2000, bal3yr: 1549, bal5yr: 1068 },
+          { type: 'Lawn - Premium (PRM)', status: 'AVAILABLE', origPrice: 75000, discount: 10000, ncp: 65000, lotPrice: 48750, mcf: 16250, spotCash: 55250, spotDp: 10400, splitDp: 1084, bal2yr: 2167, bal3yr: 1678, bal5yr: 1157 },
+          { type: 'Lawn - Special Premium (SPR)', status: 'AVAILABLE', origPrice: 90000, discount: 10000, ncp: 80000, lotPrice: 60000, mcf: 20000, spotCash: 68000, spotDp: 12800, splitDp: 1334, bal2yr: 2667, bal3yr: 2066, bal5yr: 1424 },
+          { type: 'Estate Lot (12 Lots)', status: 'AVAILABLE', origPrice: 1080000, discount: 120000, ncp: 960000, lotPrice: 720000, mcf: 240000, spotCash: 816000, spotDp: 153600, splitDp: 16000, bal2yr: 32000, bal3yr: 24782, bal5yr: 17084 }
+        ]
+      },
+      'azalea-a': {
+        name: 'Azalea A', badge: 'Prime Lot / Investors', isHold: true,
+        tiers: [
+          { type: 'Lawn - Special Premium (SPR)', status: 'INVESTOR HOLD', origPrice: 260000, discount: 10000, ncp: 250000, lotPrice: 187500, mcf: 62500, spotCash: 212500, spotDp: 40000, splitDp: 4167, bal2yr: 8334, bal3yr: 6454, bal5yr: 4449 },
+          { type: 'Estate Lot (12 Lots)', status: 'INVESTOR HOLD', origPrice: 3120000, discount: 120000, ncp: 3000000, lotPrice: 2250000, mcf: 750000, spotCash: 2550000, spotDp: 480000, splitDp: 50000, bal2yr: 100000, bal3yr: 77442, bal5yr: 53387 }
+        ]
+      },
+      'azalea-b': {
+        name: 'Azalea B', badge: 'Sold Out Reference', isHold: false,
+        tiers: [
+          { type: 'Lawn - Standard (STD)', status: 'SOLD OUT', origPrice: 80000, discount: 10000, ncp: 70000, lotPrice: 52500, mcf: 17500, spotCash: 59500, spotDp: 11200, splitDp: 1167, bal2yr: 2334, bal3yr: 1807, bal5yr: 1246 },
+          { type: 'Lawn - Premium (PRM)', status: 'SOLD OUT', origPrice: 85000, discount: 10000, ncp: 75000, lotPrice: 56250, mcf: 18750, spotCash: 63750, spotDp: 12000, splitDp: 1250, bal2yr: 2500, bal3yr: 1937, bal5yr: 1335 },
+          { type: 'Lawn - Special Premium (SPR)', status: 'SOLD OUT', origPrice: 100000, discount: 10000, ncp: 90000, lotPrice: 67500, mcf: 22500, spotCash: 76500, spotDp: 14400, splitDp: 1500, bal2yr: 3000, bal3yr: 2324, bal5yr: 1602 },
+          { type: 'Estate Lot (12 Lots)', status: 'SOLD OUT', origPrice: 1200000, discount: 120000, ncp: 1080000, lotPrice: 810000, mcf: 270000, spotCash: 918000, spotDp: 172800, splitDp: 18000, bal2yr: 36000, bal3yr: 27879, bal5yr: 19220 }
+        ]
+      }
+    };
+
+    let activeSectorKey = 'begonia-c';
+    let currentLotCount = 1;
+
+    function promptAdminUnlock() {
+      if (isUnlocked) {
+        if(confirm("Desk is currently unlocked. Lock desk?")) {
+          isUnlocked = false;
+          localStorage.removeItem('fl_desk_unlocked');
+          // Optional: clear visited to reset paywall on relock
+          visitedSectors = [];
+          localStorage.removeItem('fl_visited_sectors');
+          localStorage.removeItem('fl_metered_lock');
+          isClientLocked = false;
+          window.location.reload();
+        }
+        return;
+      }
+      const pin = prompt("Enter Authorized Desk PIN:");
+      if (pin === MASTER_PIN) {
+        isUnlocked = true;
+        localStorage.setItem('fl_desk_unlocked', 'true');
+        isClientLocked = false;
+        selectSector(activeSectorKey, true);
+      } else if (pin) {
+        alert("Invalid PIN.");
+      }
+    }
+
+    function formatSensitiveValue(val, mult) {
+      const total = val * mult;
+      if (total === 0) return 'PHP 0';
+      if (isUnlocked || !isClientLocked) {
+        return 'PHP ' + Number(total).toLocaleString('en-US');
+      }
+      
+      let str = Math.round(total).toString();
+      if (str.length <= 3) return 'PHP ' + str[0] + '**';
+      else if (str.length === 4) return 'PHP ' + str[0] + ',***';
+      else if (str.length === 5) return 'PHP ' + str[0] + '*,***';
+      else if (str.length === 6) return 'PHP ' + str[0] + '**,***';
+      else if (str.length === 7) return 'PHP ' + str[0] + ',***,***';
+      return 'PHP ***';
+    }
+
+    function selectSector(key, forceBypass = false) {
+      const data = SECTOR_DATA[key];
+      if (!data) return;
+
+      // Usage Tracking Logic
+      if (!isUnlocked && !forceBypass) {
+        if (!visitedSectors.includes(key)) {
+          visitedSectors.push(key);
+          localStorage.setItem('fl_visited_sectors', JSON.stringify(visitedSectors));
+        }
+        if (visitedSectors.length > MAX_FREE_VIEWS) {
+          isClientLocked = true;
+          localStorage.setItem('fl_metered_lock', 'true');
+        }
+      }
+
+      activeSectorKey = key;
+      updateHeaderAndBadges(data);
+      renderTierCards();
+
+      if (window.innerWidth < 1024) {
+        document.getElementById('pricing-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function updateHeaderAndBadges(data) {
+      document.getElementById('sectorTitle').innerText = data.name;
+      
+      const badge = document.getElementById('sectorBadge');
+      badge.innerText = data.badge;
+
+      if (data.isHold || data.name.includes("Sold Out")) {
+        badge.classList.replace('text-emerald-400', 'text-red-400');
+      } else {
+        badge.classList.replace('text-red-400', 'text-emerald-400');
+      }
+
+      // Handle Lock State UI
+      const teaserBanner = document.getElementById('teaserBanner');
+      const meteredIndicator = document.getElementById('meteredIndicator');
+      const meteredText = document.getElementById('meteredText');
+
+      if (isUnlocked) {
+        teaserBanner.classList.add('hidden');
+        meteredIndicator.classList.add('hidden');
+      } else {
+        if (isClientLocked) {
+          teaserBanner.classList.remove('hidden');
+          meteredText.innerText = "ACCESS LOCKED";
+          meteredText.className = "text-red-400 bg-red-950/50 px-2 py-0.5 rounded border border-red-800/50";
+        } else {
+          teaserBanner.classList.add('hidden');
+          meteredIndicator.classList.remove('hidden');
+          let remaining = MAX_FREE_VIEWS - visitedSectors.length;
+          if (remaining < 0) remaining = 0;
+          meteredText.innerText = `${remaining} Free Preview${remaining === 1 ? '' : 's'} Remaining`;
+          meteredText.className = "text-emerald-400 bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-800/50";
+        }
+      }
+
+      // Map Active Highlighting
+      document.querySelectorAll('.sector-block').forEach(el => el.classList.remove('active-sector'));
+      const activePoly = document.getElementById('poly-' + activeSectorKey);
+      if (activePoly) activePoly.classList.add('active-sector');
+    }
+
+    function adjustLotCount(delta) {
+      const next = currentLotCount + delta;
+      if (next >= 1 && next <= 10) {
+        currentLotCount = next;
+        document.getElementById('lotCountDisplay').innerText = currentLotCount;
+        renderTierCards();
+      }
+    }
+
+    function renderTierCards() {
+      const container = document.getElementById('tierCardsContainer');
+      container.innerHTML = '';
+      const data = SECTOR_DATA[activeSectorKey];
+
+      data.tiers.forEach(tier => {
+        const isUnavailable = tier.status !== 'AVAILABLE';
+        const mult = currentLotCount;
+
+        const card = document.createElement('div');
+        card.className = `p-5 rounded-lg border transition-all ${
+          isUnavailable 
+            ? 'bg-stone-950/60 border-stone-800 opacity-60' 
+            : 'bg-[#151210] border-stone-700/80 hover:border-amber-600/60 shadow-lg'
+        }`;
+
+        let statusBadge = '';
+        if (tier.status === 'AVAILABLE') {
+          statusBadge = `<span class="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded font-bold uppercase">Available</span>`;
+        } else {
+          statusBadge = `<span class="text-[10px] bg-red-950 text-red-400 border border-red-900 px-2 py-0.5 rounded font-bold uppercase">${tier.status}</span>`;
+        }
+
+        let financialsHTML = `
+          <div class="space-y-1.5 text-xs pt-2 border-t border-stone-800/80 mt-3">
+            <div class="flex justify-between font-bold">
+              <span class="text-stone-300">Net Contract Price:</span>
+              <span class="text-amber-400 font-mono text-sm">${formatSensitiveValue(tier.ncp, mult)}</span>
+            </div>
+            <div class="flex justify-between pl-3 border-l-2 border-stone-800">
+              <span class="text-stone-500 text-[10px]">Landed Price:</span>
+              <span class="font-semibold text-stone-300 font-mono text-[10px]">${formatSensitiveValue(tier.lotPrice, mult)}</span>
+            </div>
+            <div class="flex justify-between pl-3 border-l-2 border-stone-800 mb-2">
+              <span class="text-stone-500 text-[10px]">Maintenance Care Fund:</span>
+              <span class="font-semibold text-stone-300 font-mono text-[10px]">${formatSensitiveValue(tier.mcf, mult)}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-stone-400">Spot Cash (15% Off):</span>
+              <span class="font-semibold text-emerald-400 font-mono">${formatSensitiveValue(tier.spotCash, mult)}</span>
+            </div>
+            <div class="flex justify-between bg-stone-900/60 p-2.5 rounded mt-2 border border-stone-800">
+              <span class="text-stone-300 font-semibold">12-Month Split DP:</span>
+              <span class="font-bold text-white font-mono text-sm">${formatSensitiveValue(tier.splitDp, mult)} / mo</span>
+            </div>
+            <div class="grid grid-cols-3 gap-1 pt-3 text-[10px] text-stone-400 border-t border-stone-800/60 mt-2">
+              <div>
+                <span class="block text-stone-500 mb-0.5">2 Yrs (0%):</span>
+                <span class="text-stone-200 font-mono font-semibold">${formatSensitiveValue(tier.bal2yr, mult)}/mo</span>
+              </div>
+              <div>
+                <span class="block text-stone-500 mb-0.5">3 Yrs (10%):</span>
+                <span class="text-stone-200 font-mono font-semibold">${formatSensitiveValue(tier.bal3yr, mult)}/mo</span>
+              </div>
+              <div>
+                <span class="block text-stone-500 mb-0.5">5 Yrs (12%):</span>
+                <span class="text-stone-200 font-mono font-semibold">${formatSensitiveValue(tier.bal5yr, mult)}/mo</span>
+              </div>
+            </div>
+          </div>
+        `;
+
+        card.innerHTML = `
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 class="text-sm md:text-base font-bold text-white leading-snug">${tier.type}</h3>
+              <div class="text-[11px] font-medium text-stone-400 mt-1 uppercase tracking-wider">Quantity: <span class="text-white">${mult} Lot${mult > 1 ? 's' : ''}</span></div>
+            </div>
+            ${statusBadge}
+          </div>
+          ${financialsHTML}
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function generateQuotationText() {
+      const data = SECTOR_DATA[activeSectorKey];
+      const mult = currentLotCount;
+      const primaryTier = data.tiers[0];
+
+      return `FOREST LAKE SAN JACINTO
+Official Price Quotation
+
+SECTOR: ${data.name.toUpperCase()}
+LOT CLASSIFICATION: ${primaryTier.type}
+QUANTITY: ${mult} Lot(s)
+
+REGULAR LIST PRICE: ${formatSensitiveValue(primaryTier.origPrice, mult)}
+LAUNCH DISCOUNT: -${formatSensitiveValue(primaryTier.discount, mult)}
+NET CONTRACT PRICE (TCP): ${formatSensitiveValue(primaryTier.ncp, mult)}
+   -> Landed Lot Price: ${formatSensitiveValue(primaryTier.lotPrice, mult)}
+   -> Maintenance Care Fund: ${formatSensitiveValue(primaryTier.mcf, mult)}
+
+PAYMENT OPTIONS:
+1. SPOT CASH (15% Discount on TCP): ${formatSensitiveValue(primaryTier.spotCash, mult)} (within 30 days)
+2. SPLIT DOWN PAYMENT (20% TCP):
+   - 12 Months: ${formatSensitiveValue(primaryTier.splitDp, mult)} / month
+3. BALANCE PAYMENT (80% TCP):
+   - 2 Years (0% Interest): ${formatSensitiveValue(primaryTier.bal2yr, mult)} / month
+   - 3 Years (10% Interest): ${formatSensitiveValue(primaryTier.bal3yr, mult)} / month
+   - 5 Years (12% Interest): ${formatSensitiveValue(primaryTier.bal5yr, mult)} / month
+
+======================================
+OFFICIAL QUOTATION GENERATED VIA:
+UM John Edcee T. Cañizares Desk (0919 368 2062)
+Accredited Unit Manager | Cassia Agency / Animo
+To verify plot status or register reservation, contact desk directly.
+======================================`;
+    }
+
+    function copyProfessionalQuotation() {
+      // Paywall Intercept Logic
+      if (isClientLocked && !isUnlocked) {
+        document.getElementById('copyLockModal').classList.remove('hidden');
+        return;
+      }
+      
+      const text = generateQuotationText();
+
+      const handleSuccess = () => {
+        const label = document.getElementById('copyBtnLabel');
+        label.innerText = "Copied! Redirecting to FB Chat...";
+        setTimeout(() => {
+          triggerMessengerAction();
+          label.innerText = "Copy Quotation Details";
+        }, 1200);
+      };
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(handleSuccess).catch(() => fallbackCopy(text));
+      } else {
+        fallbackCopy(text);
+        handleSuccess();
+      }
+    }
+
+    function fallbackCopy(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-999999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try { document.execCommand('copy'); } catch (err) {}
+      document.body.removeChild(textArea);
+    }
+
+    function triggerMessengerAction() {
+      const sector = SECTOR_DATA[activeSectorKey].name;
+      const msg = `Good day UM John Edcee. I am checking Forest Lake San Jacinto via your official desk. I want to verify live block availability and hold the launch price for: ${sector} (${currentLotCount} lot/s). Please send the blueprint coordinates.`;
+      const encodedMsg = encodeURIComponent(msg);
+      window.open(`https://m.me/jhn.cnzrs?text=${encodedMsg}`, '_blank');
+    }
+
+    function dispatchDirectSMS() {
+      const cleanPhone = "09193682062";
+      const sector = SECTOR_DATA[activeSectorKey].name;
+      const msg = `Good day UM John Edcee. I am inquiring about Forest Lake San Jacinto (${sector}, ${currentLotCount} lot/s) via your official desk. Please assist with block availability.`;
+      const encodedMessage = encodeURIComponent(msg);
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent || navigator.vendor || window.opera);
+      window.location.href = `sms:${cleanPhone}${isIOS ? '&body=' : '?body='}${encodedMessage}`;
+    }
+
+    // Initialize Startup State
+    // Default 1st view counts if locked isn't applied yet
+    if (!visitedSectors.includes('begonia-c') && !isUnlocked && !isClientLocked) {
+      visitedSectors.push('begonia-c');
+      localStorage.setItem('fl_visited_sectors', JSON.stringify(visitedSectors));
+    }
+    selectSector('begonia-c', true);
+  </script>
+</body>
+</html>
