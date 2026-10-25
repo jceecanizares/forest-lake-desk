@@ -91,6 +91,7 @@
         Forest Lake San Jacinto
       </span>
     </div>
+    <!-- HIDDEN TRIGGER: Double-click name to open PIN prompt -->
     <div class="text-[10px] md:text-xs text-stone-400 font-medium border-l border-stone-800 pl-3 md:pl-4">
       Authorized Desk: <span class="text-white font-bold tracking-wide cursor-pointer select-none" ondblclick="promptAdminUnlock()">UM JOHN EDCEE T. CAÑIZARES</span>
     </div>
@@ -228,7 +229,7 @@
       <!-- Action Toggles (Blueprint View) -->
       <div class="px-4 pb-4 lg:px-8 w-full flex justify-center border-b border-stone-800 bg-[#0C0A09]">
         <button onclick="document.getElementById('blueprintModal').classList.remove('hidden')" class="py-2.5 px-6 bg-stone-900 border border-amber-600/50 hover:bg-stone-800 text-amber-500 font-bold rounded-lg text-xs tracking-wider uppercase transition-colors shadow-lg flex items-center gap-2">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
           View Official Blueprint Map
         </button>
       </div>
@@ -335,14 +336,12 @@
 
   <!-- ================= BLUEPRINT WATERMARK MODAL ================= -->
   <div id="blueprintModal" class="hidden fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex flex-col">
-    <!-- Modal Header -->
     <div class="flex justify-between items-center p-4 border-b border-stone-800 bg-[#0A0807]">
       <div class="text-xs font-bold text-amber-500 uppercase tracking-widest">Official Map Blueprint</div>
       <button onclick="document.getElementById('blueprintModal').classList.add('hidden')" class="text-stone-400 hover:text-white p-2">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
     </div>
-    <!-- Modal Body (Image + Watermark) -->
     <div class="flex-1 relative overflow-auto flex items-center justify-center p-4">
       <div class="relative max-w-full max-h-full inline-block border border-stone-700 shadow-2xl">
         <div class="watermark-overlay"></div>
@@ -384,9 +383,7 @@
             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.145 2 11.258c0 2.91 1.455 5.517 3.736 7.208V22l3.418-1.875c.917.254 1.89.391 2.896.391 5.523 0 10-4.145 10-9.258C22 6.145 17.523 2 12 2zm1.066 12.441l-2.541-2.71-4.96 2.71 5.454-5.789 2.607 2.71 4.894-2.71-5.454 5.789z"/></svg>
             Message Directly to Unlock
           </a>
-          <button onclick="promptAdminUnlock()" class="w-full py-2.5 bg-transparent hover:bg-stone-900 text-stone-500 hover:text-stone-400 font-bold rounded-lg text-[10px] uppercase tracking-wider transition-colors border border-transparent hover:border-stone-800">
-            Admin Bypass (PIN Required)
-          </button>
+          <!-- The Admin Bypass button was removed from here. The only way to unlock is double-clicking your name in the header. -->
         </div>
       </div>
     </div>
@@ -395,7 +392,7 @@
   <!-- ================= DATA & LOGIC ENGINE ================= -->
   <script>
     const MASTER_PIN = "100424";
-    const MAX_FREE_VIEWS = 2; // 0, 1, 2 = 3 views
+    const MAX_FREE_VIEWS = 3; 
     
     let isUnlocked = localStorage.getItem('fl_desk_unlocked') === 'true';
     let isClientLocked = localStorage.getItem('fl_metered_lock') === 'true';
@@ -410,7 +407,7 @@
     }
 
     if (isUnlocked) {
-      isClientLocked = false; // Admin overrides lock
+      isClientLocked = false; 
     }
 
     // Complete Verified Pricing Data Structure
