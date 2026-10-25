@@ -240,7 +240,6 @@
           <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-1">Future Development & Park Walkthrough</h3>
           <p class="text-xs text-stone-400 mb-4">Curated by UM John Edcee T. Cañizares Desk</p>
           <div class="w-full rounded-xl overflow-hidden border border-stone-800 shadow-2xl bg-black">
-            <!-- MP4 File targets 'future-plan.mp4' in root directory -->
             <video controls playsinline preload="metadata" class="w-full h-auto aspect-video outline-none" poster="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'><rect width='100%' height='100%' fill='%23111'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%23444' font-family='sans-serif' font-size='14'>Video Loading / Check MP4 File</text></svg>">
               <source src="future-plan.mp4" type="video/mp4">
               Your browser does not support HTML5 video.
@@ -277,7 +276,7 @@
         <!-- Metered Usage Indicator -->
         <div id="meteredIndicator" class="flex items-center justify-between mt-3 text-[10px] uppercase font-bold tracking-wider no-print">
           <span class="text-stone-400">Desk Access Status:</span>
-          <span id="meteredText" class="text-emerald-400 bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-800/50">2 Free Previews Remaining</span>
+          <span id="meteredText" class="text-emerald-400 bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-800/50">3 Free Previews Remaining</span>
         </div>
       </div>
 
@@ -345,7 +344,6 @@
     <div class="flex-1 relative overflow-auto flex items-center justify-center p-4">
       <div class="relative max-w-full max-h-full inline-block border border-stone-700 shadow-2xl">
         <div class="watermark-overlay"></div>
-        <!-- Reference your official uploaded map here -->
         <img src="blueprint.jpg" alt="Official Blueprint" draggable="false" oncontextmenu="return false;" class="max-w-[1200px] w-full h-auto object-contain block pointer-events-auto">
       </div>
     </div>
@@ -371,9 +369,12 @@
     <div class="bg-[#110E0C] border border-[#0866FF]/50 rounded-2xl p-6 max-w-md w-full shadow-[0_0_40px_rgba(8,102,255,0.15)] text-center relative overflow-hidden">
       <div class="absolute inset-0 bg-gradient-to-b from-[#0866FF]/10 to-transparent pointer-events-none"></div>
       <div class="relative z-10">
-        <div class="w-16 h-16 bg-stone-900 border border-stone-800 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+        
+        <!-- HIDDEN ADMIN TRIGGER: Double tap the padlock icon to unlock -->
+        <div ondblclick="promptAdminUnlock()" class="w-16 h-16 bg-stone-900 border border-stone-800 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner cursor-default select-none">
           <span class="text-3xl">🔒</span>
         </div>
+        
         <h3 class="text-xl font-display font-bold text-white uppercase tracking-wide mb-2">Live Inventory Lock</h3>
         <p class="text-sm text-stone-300 leading-relaxed mb-6">
           Naka-reserve para sa Cassia Agency direct clients ang full masterplan coordinates at real-time availability. I-message si UM John Edcee para i-unlock ang buong mapa at i-verify ang prime slots ngayon.
@@ -383,7 +384,6 @@
             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.145 2 11.258c0 2.91 1.455 5.517 3.736 7.208V22l3.418-1.875c.917.254 1.89.391 2.896.391 5.523 0 10-4.145 10-9.258C22 6.145 17.523 2 12 2zm1.066 12.441l-2.541-2.71-4.96 2.71 5.454-5.789 2.607 2.71 4.894-2.71-5.454 5.789z"/></svg>
             Message Directly to Unlock
           </a>
-          <!-- The Admin Bypass button was removed from here. The only way to unlock is double-clicking your name in the header. -->
         </div>
       </div>
     </div>
