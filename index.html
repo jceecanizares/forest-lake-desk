@@ -60,7 +60,7 @@
     @media print {
       body { background-color: #ffffff !important; color: #000000 !important; }
       body::before {
-        content: "OFFICIAL QUOTATION & INVENTORY DESK EXCLUSIVELY MANAGED BY UM JOHN EDCEE T. CAÑIZARES (0919 368 2062) - CASSIA AGENCY / ANIMO";
+        content: "OFFICIAL QUOTATION & INVENTORY DESK EXCLUSIVELY MANAGED BY CASSIA AGENCY";
         display: block; text-align: center; font-weight: 800; font-size: 11pt;
         margin-bottom: 24px; padding-bottom: 12px; border-bottom: 2px solid #000; color: #000; font-family: 'Montserrat', sans-serif;
       }
@@ -76,7 +76,7 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='350' height='350'><text x='10' y='175' transform='rotate(-30 175 175)' fill='rgba(255,255,255,0.4)' font-size='15' font-family='sans-serif' font-weight='900'>UM JOHN EDCEE T. CAÑIZARES • 0919 368 2062</text></svg>");
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='350' height='350'><text x='10' y='175' transform='rotate(-30 175 175)' fill='rgba(255,255,255,0.4)' font-size='15' font-family='sans-serif' font-weight='900'>CASSIA AGENCY • FOR CLIENT VERIFICATION ONLY</text></svg>");
       z-index: 10;
     }
   </style>
@@ -93,7 +93,7 @@
     </div>
     <!-- HIDDEN TRIGGER: Double-click name to open PIN prompt -->
     <div class="text-[10px] md:text-xs text-stone-400 font-medium border-l border-stone-800 pl-3 md:pl-4">
-      Authorized Desk: <span class="text-white font-bold tracking-wide cursor-pointer select-none" ondblclick="promptAdminUnlock()">UM JOHN EDCEE T. CAÑIZARES</span>
+      <span id="authDeskRole">Authorized Desk:</span> <span id="authDeskName" class="text-white font-bold tracking-wide cursor-pointer select-none" ondblclick="promptAdminUnlock()">UM JOHN EDCEE T. CAÑIZARES</span>
     </div>
   </header>
 
@@ -299,8 +299,8 @@
           </button>
         </div>
 
-        <button id="copyBtn" onclick="copyProfessionalQuotation()" class="w-full py-2.5 px-4 bg-transparent hover:bg-stone-900 text-amber-500/80 border border-stone-800 font-bold rounded text-[10px] uppercase tracking-wider transition-colors flex items-center justify-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed mt-1">
-          <span id="copyBtnLabel">Copy Quotation Details</span>
+        <button id="copyBtn" onclick="copyProfessionalQuotation()" class="w-full py-2.5 px-4 bg-transparent hover:bg-stone-900 text-amber-500/80 border border-stone-800 font-bold rounded text-[10px] uppercase tracking-wider transition-colors flex items-center justify-center gap-2 disabled:opacity-30 mt-1">
+          <span id="copyBtnLabel" class="transition-colors duration-200">Copy Quotation Details</span>
         </button>
       </div>
     </aside>
@@ -391,26 +391,64 @@
 
   <!-- ================= DATA & LOGIC ENGINE ================= -->
   <script>
-    const MASTER_PIN = "100424";
+    const ADMIN_PIN = "100424";
+    const USER_PIN = "010101";
+    const USER_SESSION_DURATION = 60 * 60 * 1000; // 1 Hour in milliseconds
     const MAX_FREE_VIEWS = 3; 
-    
-    let isUnlocked = localStorage.getItem('fl_desk_unlocked') === 'true';
-    let isClientLocked = localStorage.getItem('fl_metered_lock') === 'true';
+
+    // --- SESSION STATE RESOLUTION ---
+    function getAuthStatus() {
+      const role = localStorage.getItem('fl_auth_role');
+      if (role === 'admin') {
+        return { authorized: true, role: 'admin', remainingMs: Infinity };
+      }
+      if (role === 'user') {
+        const expiresAt = parseInt(localStorage.getItem('fl_user_expires_at') || '0', 10);
+        const name = localStorage.getItem('fl_auth_name') || 'Staff';
+        const remaining = expiresAt - Date.now();
+        if (remaining > 0) {
+          return { authorized: true, role: 'user', name: name, remainingMs: remaining };
+        } else {
+          localStorage.removeItem('fl_auth_role');
+          localStorage.removeItem('fl_auth_name');
+          localStorage.removeItem('fl_user_expires_at');
+        }
+      }
+      return { authorized: false, role: 'guest', remainingMs: 0 };
+    }
+
+    let authState = getAuthStatus();
+    let isUnlocked = authState.authorized;
+    let isClientLocked = !isUnlocked && (localStorage.getItem('fl_metered_lock') === 'true');
     let visitedSectors = JSON.parse(localStorage.getItem('fl_visited_sectors') || '[]');
 
-    // Instant Admin URL Bypass check
+    // Instant Admin URL Bypass Check (?pin=100424)
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('pin') === MASTER_PIN) {
+    if (urlParams.get('pin') === ADMIN_PIN) {
+      localStorage.setItem('fl_auth_role', 'admin');
+      localStorage.removeItem('fl_user_expires_at');
+      localStorage.removeItem('fl_metered_lock');
       isUnlocked = true;
-      localStorage.setItem('fl_desk_unlocked', 'true');
+      isClientLocked = false;
       window.history.replaceState({}, document.title, window.location.pathname);
     }
 
-    if (isUnlocked) {
-      isClientLocked = false; 
-    }
+    // Timer for Staff Users
+    setInterval(() => {
+      authState = getAuthStatus();
+      if (authState.role === 'user') {
+        if (!authState.authorized) {
+          alert("Your 1-Hour Staff Session has expired.");
+          window.location.reload();
+        } else {
+          const minsLeft = Math.max(1, Math.round(authState.remainingMs / 60000));
+          document.getElementById('authDeskName').innerText = `${authState.name.toUpperCase()} (${minsLeft}m left)`;
+          document.getElementById('meteredText').innerText = `STAFF SESSION (${minsLeft}m REMAINING)`;
+        }
+      }
+    }, 30000); // Check every 30 seconds
 
-    // Complete Verified Pricing Data Structure
+    // Complete Verified Pricing Data Structure (Oct 27 Baseline)
     const SECTOR_DATA = {
       'begonia-c': {
         name: 'Begonia C', badge: 'Prime Budget Corridor', isHold: false,
@@ -495,27 +533,56 @@
     let currentLotCount = 1;
 
     function promptAdminUnlock() {
-      if (isUnlocked) {
-        if(confirm("Desk is currently unlocked. Lock desk?")) {
-          isUnlocked = false;
-          localStorage.removeItem('fl_desk_unlocked');
-          visitedSectors = [];
+      authState = getAuthStatus();
+      if (authState.authorized) {
+        const roleLabel = authState.role === 'admin' ? 'Admin (Permanent)' : `Staff User (${authState.name})`;
+        if (confirm(`Desk is currently unlocked as: ${roleLabel}.\nDo you want to lock and reset the session?`)) {
+          localStorage.removeItem('fl_auth_role');
+          localStorage.removeItem('fl_auth_name');
+          localStorage.removeItem('fl_user_expires_at');
           localStorage.removeItem('fl_visited_sectors');
           localStorage.removeItem('fl_metered_lock');
+          visitedSectors = [];
+          isUnlocked = false;
           isClientLocked = false;
           window.location.reload();
         }
         return;
       }
-      const pin = prompt("Enter Authorized Desk PIN:");
-      if (pin === MASTER_PIN) {
+
+      const pin = prompt("Enter Access PIN (Admin or Staff):");
+      if (!pin) return;
+
+      if (pin === ADMIN_PIN) {
+        localStorage.setItem('fl_auth_role', 'admin');
+        localStorage.removeItem('fl_user_expires_at');
+        localStorage.removeItem('fl_auth_name');
+        localStorage.removeItem('fl_metered_lock');
         isUnlocked = true;
-        localStorage.setItem('fl_desk_unlocked', 'true');
         isClientLocked = false;
         document.getElementById('actionGateModal').classList.add('hidden');
         selectSector(activeSectorKey, true);
-      } else if (pin) {
-        alert("Invalid PIN.");
+        alert("Admin Access Granted (Permanent).");
+      } else if (pin === USER_PIN) {
+        const staffName = prompt("Enter your Full Name & Role (e.g., Maria Santos - SC):");
+        if (!staffName || staffName.trim() === "") {
+          alert("Access Denied: Full Name is required for Staff Access.");
+          return;
+        }
+        localStorage.setItem('fl_auth_role', 'user');
+        localStorage.setItem('fl_auth_name', staffName.trim());
+        localStorage.setItem('fl_user_expires_at', (Date.now() + USER_SESSION_DURATION).toString());
+        localStorage.removeItem('fl_metered_lock');
+        
+        // Note: Future integration can place a webhook fetch() call here to log attendance to Google Sheets.
+        
+        isUnlocked = true;
+        isClientLocked = false;
+        document.getElementById('actionGateModal').classList.add('hidden');
+        selectSector(activeSectorKey, true);
+        alert("Staff Access Granted (Valid for 1 Hour).");
+      } else {
+        alert("Invalid Access PIN.");
       }
     }
 
@@ -536,6 +603,10 @@
     }
 
     function selectSector(key, forceBypass = false) {
+      // Re-evaluate expiry on navigation
+      authState = getAuthStatus();
+      isUnlocked = authState.authorized;
+
       const data = SECTOR_DATA[key];
       if (!data) return;
 
@@ -574,11 +645,28 @@
       const meteredIndicator = document.getElementById('meteredIndicator');
       const meteredText = document.getElementById('meteredText');
       const actionGateModal = document.getElementById('actionGateModal');
+      const deskRole = document.getElementById('authDeskRole');
+      const deskName = document.getElementById('authDeskName');
 
       if (isUnlocked) {
-        meteredIndicator.classList.add('hidden');
+        meteredIndicator.classList.remove('hidden');
         actionGateModal.classList.add('hidden');
+        if (authState.role === 'admin') {
+          deskRole.innerText = "Authorized Admin:";
+          deskName.innerText = "UM JOHN EDCEE (PERMANENT)";
+          meteredText.innerText = "ADMIN DESK UNLOCKED (PERMANENT)";
+          meteredText.className = "text-amber-400 bg-amber-950/50 px-2 py-0.5 rounded border border-amber-800/50";
+        } else {
+          const minsLeft = Math.max(1, Math.round(authState.remainingMs / 60000));
+          deskRole.innerText = "Staff Desk:";
+          deskName.innerText = `${authState.name.toUpperCase()} (${minsLeft}m left)`;
+          meteredText.innerText = `STAFF SESSION (${minsLeft}m REMAINING)`;
+          meteredText.className = "text-emerald-400 bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-800/50";
+        }
       } else {
+        deskRole.innerText = "Authorized Desk:";
+        deskName.innerText = "UM JOHN EDCEE T. CAÑIZARES";
+        
         if (isClientLocked) {
           actionGateModal.classList.remove('hidden');
           meteredText.innerText = "ACCESS LOCKED";
@@ -641,7 +729,7 @@
               <span class="font-semibold text-stone-300 font-mono text-[10px]">${formatSensitiveValue(tier.lotPrice, mult)}</span>
             </div>
             <div class="flex justify-between pl-3 border-l-2 border-stone-800 mb-2">
-              <span class="text-stone-500 text-[10px]">Maintenance Care Fund:</span>
+              <span class="text-stone-500 text-[10px]">Lifetime Maintenance & Security:</span>
               <span class="font-semibold text-stone-300 font-mono text-[10px]">${formatSensitiveValue(tier.mcf, mult)}</span>
             </div>
             <div class="flex justify-between">
@@ -699,7 +787,7 @@ REGULAR LIST PRICE: ${formatSensitiveValue(primaryTier.origPrice, mult)}
 LAUNCH DISCOUNT: -${formatSensitiveValue(primaryTier.discount, mult)}
 NET CONTRACT PRICE (TCP): ${formatSensitiveValue(primaryTier.ncp, mult)}
    -> Landed Lot Price: ${formatSensitiveValue(primaryTier.lotPrice, mult)}
-   -> Maintenance Care Fund: ${formatSensitiveValue(primaryTier.mcf, mult)}
+   -> Lifetime Maintenance & Security: ${formatSensitiveValue(primaryTier.mcf, mult)}
 
 PAYMENT OPTIONS:
 1. SPOT CASH (15% Discount on TCP): ${formatSensitiveValue(primaryTier.spotCash, mult)} (within 30 days)
@@ -713,46 +801,74 @@ PAYMENT OPTIONS:
 ======================================
 OFFICIAL QUOTATION GENERATED VIA:
 UM John Edcee T. Cañizares Desk (0919 368 2062)
-Accredited Unit Manager | Cassia Agency / Animo
+Accredited Unit Manager | Cassia Agency
 To verify plot status or register reservation, contact desk directly.
 ======================================`;
     }
 
+    // Direct Synchronous Fallback Copy (Zero iOS virtual keyboard flash)
+    function executeDirectCopy(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.setAttribute("readonly", "");
+      textArea.style.position = "absolute";
+      textArea.style.left = "-9999px";
+      textArea.style.fontSize = "16px"; // Prevent iOS zoom trigger
+      document.body.appendChild(textArea);
+      
+      const isiOS = navigator.userAgent.match(/ipad|iphone/i);
+      if (isiOS) {
+        const range = document.createRange();
+        range.selectNodeContents(textArea);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        textArea.setSelectionRange(0, 999999);
+      } else {
+        textArea.select();
+      }
+
+      let copied = false;
+      try {
+        copied = document.execCommand('copy');
+      } catch (err) {
+        copied = false;
+      }
+      document.body.removeChild(textArea);
+      return copied;
+    }
+
     function copyProfessionalQuotation() {
-      if (isClientLocked && !isUnlocked) {
+      // Re-evaluate auth status prior to export
+      authState = getAuthStatus();
+      isUnlocked = authState.authorized;
+
+      if (!isUnlocked && isClientLocked) {
         document.getElementById('copyLockModal').classList.remove('hidden');
         return;
       }
       
       const text = generateQuotationText();
+      const label = document.getElementById('copyBtnLabel');
 
-      const handleSuccess = () => {
-        const label = document.getElementById('copyBtnLabel');
-        label.innerText = "Copied! Redirecting to FB Chat...";
+      const notifySuccess = () => {
+        label.innerText = "COPIED TO CLIPBOARD!";
+        label.classList.add("text-emerald-400");
         setTimeout(() => {
-          triggerMessengerAction();
           label.innerText = "Copy Quotation Details";
-        }, 1200);
+          label.classList.remove("text-emerald-400");
+        }, 2000);
       };
 
       if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(handleSuccess).catch(() => fallbackCopy(text));
+        navigator.clipboard.writeText(text)
+          .then(notifySuccess)
+          .catch(() => {
+            if (executeDirectCopy(text)) notifySuccess();
+          });
       } else {
-        fallbackCopy(text);
-        handleSuccess();
+        if (executeDirectCopy(text)) notifySuccess();
       }
-    }
-
-    function fallbackCopy(text) {
-      const textArea = document.createElement("textarea");
-      textArea.value = text;
-      textArea.style.position = "fixed";
-      textArea.style.left = "-999999px";
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-      try { document.execCommand('copy'); } catch (err) {}
-      document.body.removeChild(textArea);
     }
 
     function triggerMessengerAction() {
