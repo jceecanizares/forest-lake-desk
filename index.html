@@ -91,7 +91,6 @@
         Forest Lake San Jacinto
       </span>
     </div>
-    <!-- HIDDEN TRIGGER: Double-click name to open PIN prompt -->
     <div class="text-[10px] md:text-xs text-stone-400 font-medium border-l border-stone-800 pl-3 md:pl-4">
       <span id="authDeskRole">Authorized Desk:</span> <span id="authDeskName" class="text-white font-bold tracking-wide cursor-pointer select-none" ondblclick="promptAdminUnlock()">UM JOHN EDCEE T. CAÑIZARES</span>
     </div>
@@ -395,6 +394,7 @@
     const USER_PIN = "010101";
     const USER_SESSION_DURATION = 60 * 60 * 1000; // 1 Hour in milliseconds
     const MAX_FREE_VIEWS = 3; 
+    const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzQAIUGTvNwhpdJl9N0QF_0Q1QQ-AD2XtG18dc5x3UEAJnRViHxflNL6TTuH6MQl-QY-w/exec";
 
     // --- SESSION STATE RESOLUTION ---
     function getAuthStatus() {
@@ -569,12 +569,19 @@
           alert("Access Denied: Full Name is required for Staff Access.");
           return;
         }
+        
         localStorage.setItem('fl_auth_role', 'user');
         localStorage.setItem('fl_auth_name', staffName.trim());
         localStorage.setItem('fl_user_expires_at', (Date.now() + USER_SESSION_DURATION).toString());
         localStorage.removeItem('fl_metered_lock');
         
-        // Note: Future integration can place a webhook fetch() call here to log attendance to Google Sheets.
+        // --- WEBHOOK LOGGING FOR GOOGLE SHEETS ---
+        fetch(WEBHOOK_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: staffName.trim() })
+        });
         
         isUnlocked = true;
         isClientLocked = false;
