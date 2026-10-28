@@ -102,7 +102,10 @@
       <span class="text-[10px] uppercase font-bold text-stone-500 tracking-wider whitespace-nowrap pl-1 pr-1">
         Sectors
       </span>
-      <button onclick="selectSector('begonia-c')" class="chip-btn px-3 py-1.5 rounded bg-emerald-950/70 border border-emerald-600/60 text-emerald-300 text-xs font-semibold whitespace-nowrap active:scale-95 transition-all">
+      <button onclick="selectSector('begonia-f')" class="chip-btn px-3 py-1.5 rounded bg-emerald-950/70 border border-emerald-600/60 text-emerald-300 text-xs font-semibold whitespace-nowrap active:scale-95 transition-all">
+        Begonia F (New)
+      </button>
+      <button onclick="selectSector('begonia-c')" class="chip-btn px-3 py-1.5 rounded bg-stone-900 border border-stone-700 text-stone-300 text-xs font-semibold whitespace-nowrap active:scale-95 transition-all">
         Begonia C
       </button>
       <button onclick="selectSector('begonia-a')" class="chip-btn px-3 py-1.5 rounded bg-stone-900 border border-stone-700 text-stone-300 text-xs font-semibold whitespace-nowrap active:scale-95 transition-all">
@@ -172,9 +175,15 @@
 
           <!-- ROW 1 (TOP) -->
           <g id="poly-phase-2" class="sector-block" role="button" tabindex="0" onclick="selectSector('phase-2')">
-            <rect x="450" y="50" width="380" height="100" rx="12" fill="rgba(87, 83, 78, 0.2)" stroke="#78716C" stroke-width="2" stroke-dasharray="8,4" />
-            <text x="640" y="100" fill="#A8A29E" font-size="28" font-weight="900" font-family="Montserrat" text-anchor="middle">BEGONIA E, F, G, H</text>
-            <text x="640" y="125" fill="#78716C" font-size="16" font-weight="700" font-family="Montserrat" text-anchor="middle">PHASE 2 (UNRELEASED)</text>
+            <rect x="450" y="50" width="180" height="100" rx="12" fill="rgba(87, 83, 78, 0.2)" stroke="#78716C" stroke-width="2" stroke-dasharray="8,4" />
+            <text x="540" y="98" fill="#A8A29E" font-size="20" font-weight="900" font-family="Montserrat" text-anchor="middle">BEG E, G, H</text>
+            <text x="540" y="122" fill="#78716C" font-size="12" font-weight="700" font-family="Montserrat" text-anchor="middle">PHASE 2 (UNRELEASED)</text>
+          </g>
+
+          <g id="poly-begonia-f" class="sector-block" role="button" tabindex="0" onclick="selectSector('begonia-f')" filter="url(#glowGreen)">
+            <rect x="650" y="50" width="180" height="100" rx="12" fill="rgba(34, 197, 94, 0.45)" stroke="#4ADE80" stroke-width="4" />
+            <text x="740" y="100" fill="#FFFFFF" font-size="24" font-weight="900" font-family="Montserrat" text-anchor="middle">BEG F</text>
+            <text x="740" y="125" fill="#FEF08A" font-size="13" font-weight="800" font-family="Montserrat" text-anchor="middle">PHP 917/MO (NEW)</text>
           </g>
           
           <g id="poly-cattleya-b" class="sector-block" role="button" tabindex="0" onclick="selectSector('cattleya-b')" filter="url(#glowCyan)">
@@ -189,9 +198,9 @@
           </g>
 
           <g id="poly-begonia-c" class="sector-block" role="button" tabindex="0" onclick="selectSector('begonia-c')" filter="url(#glowGreen)">
-            <rect x="650" y="170" width="180" height="100" rx="12" fill="rgba(34, 197, 94, 0.45)" stroke="#4ADE80" stroke-width="4" />
-            <text x="740" y="225" fill="#FFFFFF" font-size="26" font-weight="900" font-family="Montserrat" text-anchor="middle">BEG C</text>
-            <text x="740" y="250" fill="#FEF08A" font-size="14" font-weight="800" font-family="Montserrat" text-anchor="middle">PHP 9**/MO</text>
+            <rect x="650" y="170" width="180" height="100" rx="12" fill="rgba(21, 128, 61, 0.3)" stroke="#22C55E" stroke-width="3" />
+            <text x="740" y="225" fill="#FFFFFF" font-size="24" font-weight="900" font-family="Montserrat" text-anchor="middle">BEG C</text>
+            <text x="740" y="248" fill="#FCA5A5" font-size="11" font-weight="800" font-family="Montserrat" text-anchor="middle">STD DEPLETED</text>
           </g>
 
           <g id="poly-dahlia-c" class="sector-block" role="button" tabindex="0" onclick="selectSector('dahlia-c')" filter="url(#glowCyan)">
@@ -219,7 +228,8 @@
 
           <g id="poly-begonia-b" class="sector-block" role="button" tabindex="0" onclick="selectSector('begonia-b')" filter="url(#glowGreen)">
             <rect x="650" y="290" width="180" height="100" rx="12" fill="rgba(21, 128, 61, 0.25)" stroke="#4ADE80" stroke-width="3" />
-            <text x="740" y="350" fill="#FFFFFF" font-size="24" font-weight="900" font-family="Montserrat" text-anchor="middle">BEG B</text>
+            <text x="740" y="342" fill="#FFFFFF" font-size="24" font-weight="900" font-family="Montserrat" text-anchor="middle">BEG B</text>
+            <text x="740" y="365" fill="#FCA5A5" font-size="11" font-weight="800" font-family="Montserrat" text-anchor="middle">STD DEPLETED</text>
           </g>
         </svg>
 
@@ -256,10 +266,10 @@
         <div class="flex justify-between items-start mb-3">
           <div>
             <h2 id="sectorTitle" class="text-xl md:text-2xl font-display font-bold text-white tracking-wide uppercase">
-              Begonia C
+              Begonia F
             </h2>
             <div id="sectorBadge" class="text-emerald-400 text-xs font-semibold uppercase tracking-wider mt-0.5">
-              Prime Budget Corridor
+              Newly Opened Prime Sector (₱917/mo Hook)
             </div>
           </div>
           <div class="text-right">
@@ -394,7 +404,6 @@
     const USER_PIN = "010101";
     const USER_SESSION_DURATION = 60 * 60 * 1000; // 1 Hour in milliseconds
     const MAX_FREE_VIEWS = 3; 
-    const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzQAIUGTvNwhpdJl9N0QF_0Q1QQ-AD2XtG18dc5x3UEAJnRViHxflNL6TTuH6MQl-QY-w/exec";
 
     // --- SESSION STATE RESOLUTION ---
     function getAuthStatus() {
@@ -446,21 +455,29 @@
           document.getElementById('meteredText').innerText = `STAFF SESSION (${minsLeft}m REMAINING)`;
         }
       }
-    }, 30000); // Check every 30 seconds
+    }, 30000);
 
-    // Complete Verified Pricing Data Structure (Oct 27 Baseline)
+    // Complete Verified Pricing Data Structure (Oct 28 Reconciled)
     const SECTOR_DATA = {
-      'begonia-c': {
-        name: 'Begonia C', badge: 'Prime Budget Corridor', isHold: false,
+      'begonia-f': {
+        name: 'Begonia F', badge: 'Newly Opened Prime Sector (₱917/mo Hook)', isHold: false,
         tiers: [
           { type: 'Lawn - Standard (STD)', status: 'AVAILABLE', origPrice: 65000, discount: 10000, ncp: 55000, lotPrice: 41250, mcf: 13750, spotCash: 46750, spotDp: 8800, splitDp: 917, bal2yr: 1834, bal3yr: 1420, bal5yr: 979 },
+          { type: 'Lawn - Premium (PRM)', status: 'AVAILABLE', origPrice: 70000, discount: 10000, ncp: 60000, lotPrice: 45000, mcf: 15000, spotCash: 51000, spotDp: 9600, splitDp: 1000, bal2yr: 2000, bal3yr: 1549, bal5yr: 1068 },
+          { type: 'Lawn - Special Premium (SPR)', status: 'AVAILABLE', origPrice: 80000, discount: 10000, ncp: 70000, lotPrice: 52500, mcf: 17500, spotCash: 59500, spotDp: 11200, splitDp: 1167, bal2yr: 2334, bal3yr: 1807, bal5yr: 1246 }
+        ]
+      },
+      'begonia-c': {
+        name: 'Begonia C', badge: 'Standard Depleted • PRM & SPR Open', isHold: false,
+        tiers: [
+          { type: 'Lawn - Standard (STD)', status: 'DEPLETED', origPrice: 65000, discount: 10000, ncp: 55000, lotPrice: 41250, mcf: 13750, spotCash: 46750, spotDp: 8800, splitDp: 917, bal2yr: 1834, bal3yr: 1420, bal5yr: 979 },
           { type: 'Lawn - Premium (PRM)', status: 'AVAILABLE', origPrice: 70000, discount: 10000, ncp: 60000, lotPrice: 45000, mcf: 15000, spotCash: 51000, spotDp: 9600, splitDp: 1000, bal2yr: 2000, bal3yr: 1549, bal5yr: 1068 },
           { type: 'Lawn - Special Premium (SPR)', status: 'AVAILABLE', origPrice: 80000, discount: 10000, ncp: 70000, lotPrice: 52500, mcf: 17500, spotCash: 59500, spotDp: 11200, splitDp: 1167, bal2yr: 2334, bal3yr: 1807, bal5yr: 1246 },
           { type: 'Estate Lot (12 Lots)', status: 'AVAILABLE', origPrice: 960000, discount: 120000, ncp: 840000, lotPrice: 630000, mcf: 210000, spotCash: 714000, spotDp: 134400, splitDp: 14000, bal2yr: 28000, bal3yr: 21684, bal5yr: 14949 }
         ]
       },
       'begonia-b': {
-        name: 'Begonia B', badge: 'Roadside Premium', isHold: false,
+        name: 'Begonia B', badge: 'Standard Depleted • Roadside PRM/SPR Open', isHold: false,
         tiers: [
           { type: 'Lawn - Standard (STD)', status: 'DEPLETED', origPrice: 65000, discount: 10000, ncp: 55000, lotPrice: 41250, mcf: 13750, spotCash: 46750, spotDp: 8800, splitDp: 917, bal2yr: 1834, bal3yr: 1420, bal5yr: 979 },
           { type: 'Lawn - Premium (PRM)', status: 'AVAILABLE', origPrice: 70000, discount: 10000, ncp: 60000, lotPrice: 45000, mcf: 15000, spotCash: 51000, spotDp: 9600, splitDp: 1000, bal2yr: 2000, bal3yr: 1549, bal5yr: 1068 },
@@ -469,7 +486,7 @@
         ]
       },
       'phase-2': {
-        name: 'Phase 2 (E, F, G, H)', badge: 'Unreleased Future Plan', isHold: false,
+        name: 'Phase 2 (E, G, H)', badge: 'Unreleased Future Plan', isHold: false,
         tiers: [
           { type: 'Projected Lawn (STD)', status: 'UNRELEASED', origPrice: 65000, discount: 10000, ncp: 55000, lotPrice: 41250, mcf: 13750, spotCash: 46750, spotDp: 8800, splitDp: 917, bal2yr: 1834, bal3yr: 1420, bal5yr: 979 },
           { type: 'Projected Lawn (PRM)', status: 'UNRELEASED', origPrice: 70000, discount: 10000, ncp: 60000, lotPrice: 45000, mcf: 15000, spotCash: 51000, spotDp: 9600, splitDp: 1000, bal2yr: 2000, bal3yr: 1549, bal5yr: 1068 }
@@ -529,7 +546,7 @@
       }
     };
 
-    let activeSectorKey = 'begonia-c';
+    let activeSectorKey = 'begonia-f';
     let currentLotCount = 1;
 
     function promptAdminUnlock() {
@@ -575,14 +592,6 @@
         localStorage.setItem('fl_user_expires_at', (Date.now() + USER_SESSION_DURATION).toString());
         localStorage.removeItem('fl_metered_lock');
         
-        // --- WEBHOOK LOGGING FOR GOOGLE SHEETS ---
-        fetch(WEBHOOK_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name: staffName.trim() })
-        });
-        
         isUnlocked = true;
         isClientLocked = false;
         document.getElementById('actionGateModal').classList.add('hidden');
@@ -610,7 +619,6 @@
     }
 
     function selectSector(key, forceBypass = false) {
-      // Re-evaluate expiry on navigation
       authState = getAuthStatus();
       isUnlocked = authState.authorized;
 
@@ -643,10 +651,10 @@
       const badge = document.getElementById('sectorBadge');
       badge.innerText = data.badge;
 
-      if (data.isHold || data.name.includes("Sold Out")) {
-        badge.classList.replace('text-emerald-400', 'text-red-400');
+      if (data.isHold || data.name.includes("Sold Out") || data.badge.includes("Depleted")) {
+        badge.classList.replace('text-emerald-400', 'text-amber-400');
       } else {
-        badge.classList.replace('text-red-400', 'text-emerald-400');
+        badge.classList.replace('text-amber-400', 'text-emerald-400');
       }
 
       const meteredIndicator = document.getElementById('meteredIndicator');
@@ -813,14 +821,13 @@ To verify plot status or register reservation, contact desk directly.
 ======================================`;
     }
 
-    // Direct Synchronous Fallback Copy (Zero iOS virtual keyboard flash)
     function executeDirectCopy(text) {
       const textArea = document.createElement("textarea");
       textArea.value = text;
       textArea.setAttribute("readonly", "");
       textArea.style.position = "absolute";
       textArea.style.left = "-9999px";
-      textArea.style.fontSize = "16px"; // Prevent iOS zoom trigger
+      textArea.style.fontSize = "16px";
       document.body.appendChild(textArea);
       
       const isiOS = navigator.userAgent.match(/ipad|iphone/i);
@@ -846,7 +853,6 @@ To verify plot status or register reservation, contact desk directly.
     }
 
     function copyProfessionalQuotation() {
-      // Re-evaluate auth status prior to export
       authState = getAuthStatus();
       isUnlocked = authState.authorized;
 
@@ -885,12 +891,12 @@ To verify plot status or register reservation, contact desk directly.
       window.open(`https://m.me/jhn.cnzrs?text=${encodedMsg}`, '_blank');
     }
 
-    // Initialize Startup State
-    if (!visitedSectors.includes('begonia-c') && !isUnlocked && !isClientLocked) {
-      visitedSectors.push('begonia-c');
+    // Initialize Startup State (Default to Begonia F)
+    if (!visitedSectors.includes('begonia-f') && !isUnlocked && !isClientLocked) {
+      visitedSectors.push('begonia-f');
       localStorage.setItem('fl_visited_sectors', JSON.stringify(visitedSectors));
     }
-    selectSector('begonia-c', true);
+    selectSector('begonia-f', true);
   </script>
 </body>
 </html>
